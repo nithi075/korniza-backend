@@ -1,4 +1,4 @@
-import "./Featured.css";
+import "./featured.css";
 
 // your gallery images
 import img1 from "../../assets/featured/img1.jpg";
