@@ -4,12 +4,20 @@ const Featured =
 const addFeatured =
   async (req, res) => {
     try {
-      /* NEW IMAGE URLS */
+
+      /* CHECK FILES */
+
+      if (!req.files || req.files.length === 0) {
+        return res.status(400).json({
+          message: "No images uploaded"
+        });
+      }
+
+      /* CLOUDINARY IMAGE URLS */
 
       const newImageUrls =
         req.files.map(
-          (file) =>
-            `https://korniza-backend.onrender.com/uploads/images/${file.filename}`
+          (file) => file.path
         );
 
       /* CHECK EXISTING DATA */
@@ -17,27 +25,20 @@ const addFeatured =
       let existingFeatured =
         await Featured.findOne();
 
-      if (
-        existingFeatured
-      ) {
+      if (existingFeatured) {
+
         /* KEEP OLD IMAGES */
 
-        let updatedImages =
-          [
-            ...existingFeatured.images,
-            ...newImageUrls
-          ];
+        let updatedImages = [
+          ...existingFeatured.images,
+          ...newImageUrls
+        ];
 
         /* KEEP ONLY LATEST 5 */
 
-        if (
-          updatedImages.length >
-          5
-        ) {
+        if (updatedImages.length > 5) {
           updatedImages =
-            updatedImages.slice(
-              -5
-            );
+            updatedImages.slice(-5);
         }
 
         /* UPDATE */
@@ -62,11 +63,9 @@ const addFeatured =
 
       const data =
         new Featured({
-          title:
-            req.body.title,
+          title: req.body.title,
 
-          images:
-            newImageUrls
+          images: newImageUrls
         });
 
       await data.save();
@@ -77,17 +76,22 @@ const addFeatured =
 
         data
       });
+
     } catch (error) {
+
+      console.log(error);
+
       res.status(500).json({
-        error:
-          error.message
+        error: error.message
       });
+
     }
   };
 
 const getFeatured =
   async (req, res) => {
     try {
+
       const data =
         await Featured.findOne();
 
@@ -101,11 +105,13 @@ const getFeatured =
       }
 
       res.json(data);
+
     } catch (error) {
+
       res.status(500).json({
-        error:
-          error.message
+        error: error.message
       });
+
     }
   };
 
