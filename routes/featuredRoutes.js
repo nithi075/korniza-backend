@@ -1,15 +1,28 @@
-const express = require("express");
-const router = express.Router();
+const express =
+  require("express");
 
-const upload = require("../middleware/upload");
-const controller = require("../controllers/featuredController");
+const router =
+  express.Router();
+
+const upload =
+  require("../middleware/upload");
+
+const {
+  addFeatured,
+  getFeatured
+} = require(
+  "../controllers/featuredController"
+);
 
 router.post(
   "/add",
-  upload.array("images", 8),
-  controller.addFeatured
+  upload.array("images", 5),
+  addFeatured
 );
 
-router.get("/all", controller.getFeatured);
+router.get(
+  "/all",
+  getFeatured
+);
 
 module.exports = router;
