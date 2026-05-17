@@ -22,7 +22,7 @@ exports.addTestimonial = async (
             .clientName,
         review:
           req.body.review,
-        imageUrl: `http://localhost:5000/uploads/images/${req.file.filename}`
+        imageUrl: `https://korniza-backend.onrender.com/uploads/images/${req.file.filename}`
       });
 
     await data.save();
