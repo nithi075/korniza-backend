@@ -1,0 +1,109 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Montserrat:wght@300;400&display=swap');
+
+.services{
+
+ background:#f4f1ea;
+
+ padding:35px 20px;
+
+ display:flex;
+
+ justify-content:center;
+
+}
+
+/* container */
+.services-container{
+
+ width:100%;
+
+ max-width:900px;
+
+ display:flex;
+
+ justify-content:space-between;
+
+ align-items:center;
+
+ gap:15px;
+
+ text-align:center;
+
+}
+
+/* each item */
+.service-item{
+
+ display:flex;
+
+ flex-direction:column;
+
+ align-items:center;
+
+ gap:8px;
+
+ flex:1;
+
+}
+
+/* icon */
+.service-icon{
+
+ font-size:18px;
+
+ color:#c5a059;
+
+}
+
+/* text */
+.service-text h4{
+
+ font-family:"Cormorant Garamond", serif;
+
+ font-weight:400;
+
+ font-size:.8rem;
+
+ letter-spacing:2px;
+
+ margin-bottom:3px;
+
+}
+
+.service-text p{
+
+ font-family:Montserrat;
+
+ font-size:.6rem;
+
+ color:#777;
+
+}
+
+/* tablet */
+@media(min-width:768px){
+
+ .service-text h4{
+
+  font-size:1rem;
+
+ }
+
+ .service-text p{
+
+  font-size:.75rem;
+
+ }
+
+}
+
+/* desktop */
+@media(min-width:1024px){
+
+ .services{
+
+  padding:50px 20px;
+
+ }
+
+}

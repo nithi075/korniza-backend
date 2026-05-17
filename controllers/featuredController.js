@@ -1,69 +1,113 @@
-const Featured = require("../models/Featured");
+const Featured =
+  require("../models/Featured");
 
-const addFeatured = async (req, res) => {
-  try {
-    const imageUrls = req.files.map(
-      (file) =>
-        `http://localhost:5000/uploads/${file.filename}`
-    );
+const addFeatured =
+  async (req, res) => {
+    try {
+      /* NEW IMAGE URLS */
 
-    // check existing featured data
-    let existingFeatured = await Featured.findOne();
+      const newImageUrls =
+        req.files.map(
+          (file) =>
+            `http://localhost:5000/uploads/images/${file.filename}`
+        );
 
-    if (existingFeatured) {
-      // update existing document
-      existingFeatured.title = req.body.title;
-      existingFeatured.videoUrl = req.body.videoUrl;
-      existingFeatured.images = imageUrls;
+      /* CHECK EXISTING DATA */
 
-      await existingFeatured.save();
+      let existingFeatured =
+        await Featured.findOne();
 
-      return res.json({
-        message: "Featured updated successfully",
-        data: existingFeatured
+      if (
+        existingFeatured
+      ) {
+        /* KEEP OLD IMAGES */
+
+        let updatedImages =
+          [
+            ...existingFeatured.images,
+            ...newImageUrls
+          ];
+
+        /* KEEP ONLY LATEST 5 */
+
+        if (
+          updatedImages.length >
+          5
+        ) {
+          updatedImages =
+            updatedImages.slice(
+              -5
+            );
+        }
+
+        /* UPDATE */
+
+        existingFeatured.title =
+          req.body.title;
+
+        existingFeatured.images =
+          updatedImages;
+
+        await existingFeatured.save();
+
+        return res.json({
+          message:
+            "Featured updated successfully",
+
+          data: existingFeatured
+        });
+      }
+
+      /* CREATE NEW */
+
+      const data =
+        new Featured({
+          title:
+            req.body.title,
+
+          images:
+            newImageUrls
+        });
+
+      await data.save();
+
+      res.json({
+        message:
+          "Featured added successfully",
+
+        data
+      });
+    } catch (error) {
+      res.status(500).json({
+        error:
+          error.message
       });
     }
+  };
 
-    // create new document only if no data exists
-    const data = new Featured({
-      title: req.body.title,
-      videoUrl: req.body.videoUrl,
-      images: imageUrls
-    });
+const getFeatured =
+  async (req, res) => {
+    try {
+      const data =
+        await Featured.findOne();
 
-    await data.save();
+      if (!data) {
+        return res.json({
+          message:
+            "No featured data found",
 
-    res.json({
-      message: "Featured added successfully",
-      data
-    });
+          images: []
+        });
+      }
 
-  } catch (error) {
-    res.status(500).json({
-      error: error.message
-    });
-  }
-};
-
-const getFeatured = async (req, res) => {
-  try {
-    const data = await Featured.findOne();
-
-    if (!data) {
-      return res.json({
-        message: "No featured data found",
-        images: []
+      res.json(data);
+    } catch (error) {
+      res.status(500).json({
+        error:
+          error.message
       });
     }
-
-    res.json(data);
-
-  } catch (error) {
-    res.status(500).json({
-      error: error.message
-    });
-  }
-};
+  };
 
 module.exports = {
   addFeatured,

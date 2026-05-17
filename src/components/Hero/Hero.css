@@ -1,0 +1,357 @@
+/* Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Outfit:wght@300;400;500;600&family=Great+Vibes&display=swap');
+
+:root {
+  --gold: #c5a059;
+  --gold-dark: #a77f36;
+  --white: #ffffff;
+
+  --font-heading: 'Playfair Display', serif;
+  --font-body: 'Outfit', sans-serif;
+  --font-accent: 'Great Vibes', cursive;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  background: #fcfaf7;
+  color: var(--black);
+}
+
+/* ================= HERO SECTION ================= */
+.hero {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+}
+
+.hero-bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+}
+
+/* ================= NAVBAR ================= */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 25px;
+
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+}
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.logo img {
+  height: 55px;
+  width: auto;
+}
+
+.brand-title {
+  font-family: var(--font-heading);
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: black;
+  flex: 1;
+  text-align: center;
+}
+
+/* Nav Links */
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 25px;
+  align-items: center;
+}
+
+/* FIXED anchor styling */
+.nav-links li a {
+  text-decoration: none;   /* underline removed */
+  color: #333;             /* visible on white navbar */
+  font-size: 14px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: 0.3s ease;
+}
+
+.nav-links li a:hover {
+  color: var(--gold);
+}
+
+/* Button */
+.nav-btn {
+  padding: 10px 22px;
+  border: none;
+  background: var(--gold);
+  color: white;
+  border-radius: 30px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.nav-btn:hover {
+  background: var(--gold-dark);
+}
+
+.menu-icon {
+  display: none;
+  cursor: pointer;
+  color: var(--gold);
+}
+
+/* ================= HERO CONTENT ================= */
+.hero-overlay {
+  position: relative;
+  z-index: 5;
+  height: calc(100vh - 80px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  text-align: center;
+  padding: 20px;
+}
+
+.sub-title {
+  font-family: var(--font-accent);
+  font-size: 2rem;
+  color: var(--gold);
+}
+
+.hero-overlay h1 {
+  font-family: var(--font-heading);
+  font-size: 4rem;
+  margin-top: 10px;
+}
+
+.hero-overlay p {
+  max-width: 600px;
+  margin-top: 20px;
+  line-height: 1.8;
+}
+
+.hero-btns {
+  margin-top: 30px;
+  display: flex;
+  gap: 15px;
+}
+
+.hero-btn,
+.hero-btn-outline {
+  padding: 14px 28px;
+  border-radius: 30px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.hero-btn {
+  background: var(--gold);
+  color: white;
+  border: none;
+}
+
+.hero-btn-outline {
+  background: transparent;
+  border: 1px solid white;
+  color: white;
+}
+
+/* ================= MOBILE ================= */
+@media (max-width: 767px) {
+  .menu-icon {
+    display: block;
+  }
+
+  .desktop-btn {
+    display: none;
+  }
+
+  .brand-title {
+    font-size: 1.25rem;
+  }
+
+  .nav-links {
+    position: absolute;
+    top: 70px;
+    left: 0;
+    width: 100%;
+    background: white;
+    flex-direction: column;
+    padding: 20px;
+    display: none;
+    gap: 20px;
+  }
+
+  .nav-links.active {
+    display: flex;
+  }
+
+  .hero-overlay h1 {
+    font-size: 2.3rem;
+  }
+
+  .hero-btns {
+    flex-direction: column;
+  }
+}
+
+/* ================= TABLET & DESKTOP ================= */
+@media (min-width: 768px) {
+  .menu-icon {
+    display: none;
+  }
+
+  .brand-title {
+    display: none;
+  }
+}
+/* hero bg slider */
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  overflow: hidden;
+}
+
+.hero-bg img {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 1.5s ease-in-out;
+}
+
+.hero-bg img.active-slide {
+  opacity: 1;
+}
+
+/* dark overlay effect */
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  z-index: 0;
+}
+/* ================= MOBILE ================= */
+@media (max-width: 767px) {
+
+  .navbar {
+    padding: 12px 18px;
+  }
+
+  /* smaller logo */
+  .logo img {
+    height: 42px;
+  }
+
+  /* show brand title in mobile */
+  .brand-title {
+    font-size: 1rem;
+    flex: 1;
+    text-align: center;
+  }
+
+  /* show menu icon */
+  .menu-icon {
+    display: block;
+    z-index: 1100;
+  }
+
+  /* hide desktop button */
+  .desktop-btn {
+    display: none;
+  }
+
+  /* mobile dropdown menu */
+  .nav-links {
+    position: absolute;
+    top: 75px;
+    left: 0;
+    width: 100%;
+    background: white;
+    flex-direction: column;
+    padding: 25px;
+    gap: 18px;
+    display: none;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+  }
+
+  .nav-links.active {
+    display: flex;
+  }
+
+  .nav-links li a {
+    font-size: 13px;
+  }
+
+  /* hero content mobile */
+  .hero-overlay {
+    padding: 20px;
+    height: 100vh;
+    padding-top: 90px;
+  }
+
+  .sub-title {
+    font-size: 1.5rem;
+  }
+
+  .hero-overlay h1 {
+    font-size: 2.2rem;
+    line-height: 1.3;
+  }
+
+  .hero-overlay p {
+    font-size: 14px;
+    max-width: 100%;
+  }
+
+  .hero-btns {
+    flex-direction: column;
+    width: 100%;
+    gap: 12px;
+  }
+
+  .hero-btn,
+  .hero-btn-outline {
+    width: 100%;
+    padding: 12px;
+  }
+}

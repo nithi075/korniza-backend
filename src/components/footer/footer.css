@@ -1,0 +1,128 @@
+.footer{
+
+ background:white;
+
+ padding-top:80px;
+
+}
+
+/* curved gold shape */
+.footer-curve{
+
+ background:#c5a059;
+
+ border-top-left-radius:120px;
+
+ border-top-right-radius:120px;
+
+ padding:60px 20px;
+
+ text-align:center;
+
+ color:white;
+
+}
+
+/* logo */
+.footer-logo{
+
+ font-family:"Cormorant Garamond";
+
+ font-size:1.5rem;
+
+ margin-bottom:20px;
+
+}
+
+/* gallery */
+.footer-gallery{
+
+ display:flex;
+
+ justify-content:center;
+
+ gap:6px;
+
+ margin-bottom:20px;
+
+}
+
+.footer-gallery img{
+
+ width:45px;
+
+ height:45px;
+
+ object-fit:cover;
+
+ border-radius:4px;
+
+}
+
+/* buttons */
+.footer-buttons{
+
+ display:flex;
+
+ justify-content:center;
+
+ gap:10px;
+
+ margin-bottom:20px;
+
+}
+
+.footer-buttons button{
+
+ background:white;
+
+ color:#c5a059;
+
+ border:none;
+
+ padding:8px 16px;
+
+ font-size:.6rem;
+
+ letter-spacing:2px;
+
+}
+
+/* copyright */
+.copyright{
+
+ font-size:.6rem;
+
+ opacity:.8;
+
+}
+
+/* tablet */
+@media(min-width:768px){
+
+ .footer-gallery img{
+
+  width:60px;
+
+  height:60px;
+
+ }
+
+}
+
+/* desktop */
+@media(min-width:1024px){
+
+ .footer-curve{
+
+  padding:80px 20px;
+
+ }
+
+ .footer-logo{
+
+  font-size:2rem;
+
+ }
+
+}

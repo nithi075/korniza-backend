@@ -5,7 +5,7 @@ const addInstagram = async (req, res) => {
     const data = new Instagram({
       title: req.body.title,
       postLink: req.body.postLink,
-      imageUrl: `http://localhost:5000/uploads/${req.file.filename}`
+      imageUrl: `http://localhost:5000/uploads/images/${req.file.filename}`
     });
 
     await data.save();

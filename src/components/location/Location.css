@@ -1,0 +1,112 @@
+.location{
+
+ padding:60px 20px;
+
+ text-align:center;
+
+ background:#ffffff;
+
+}
+
+/* small subtitle */
+.location-tag{
+
+ font-size:.6rem;
+
+ letter-spacing:3px;
+
+ color:#c5a059;
+
+ display:block;
+
+ margin-bottom:8px;
+
+}
+
+/* heading */
+.location h2{
+
+ font-family:"Cormorant Garamond";
+
+ font-size:1.8rem;
+
+ letter-spacing:2px;
+
+ margin-bottom:20px;
+
+}
+
+/* address */
+.location-text{
+
+ font-size:.8rem;
+
+ color:#666;
+
+ line-height:1.8;
+
+ margin-bottom:30px;
+
+}
+
+/* map container */
+.map-container{
+
+ width:100%;
+
+ max-width:900px;
+
+ margin:auto;
+
+ overflow:hidden;
+
+ border-radius:10px;
+
+ box-shadow:0 5px 20px rgba(0,0,0,0.08);
+
+}
+
+/* iframe */
+.map-container iframe{
+
+ width:100%;
+
+ height:300px;
+
+ border:none;
+
+}
+
+/* tablet */
+@media(min-width:768px){
+
+ .map-container iframe{
+
+  height:400px;
+
+ }
+
+}
+
+/* desktop */
+@media(min-width:1024px){
+
+ .location{
+
+  padding:90px 20px;
+
+ }
+
+ .location h2{
+
+  font-size:2.2rem;
+
+ }
+
+ .map-container iframe{
+
+  height:500px;
+
+ }
+
+}

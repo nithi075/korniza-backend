@@ -1,0 +1,209 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=Montserrat:wght@300;400&display=swap');
+
+/* ================= SECTION ================= */
+.portfolio {
+  padding: 80px 20px;
+  background: #fcfaf7;
+  text-align: center;
+  overflow: hidden;
+}
+
+/* small tag */
+.p-tag {
+  font-family: "Montserrat", sans-serif;
+  font-size: 0.65rem;
+  letter-spacing: 3px;
+  color: #b08d57;
+  text-transform: uppercase;
+  margin-bottom: 15px;
+  display: block;
+}
+
+/* heading */
+.portfolio h2 {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 3rem;
+  font-weight: 400;
+  margin-bottom: 60px;
+  letter-spacing: 2px;
+  color: #111;
+}
+
+/* ================= SLIDER ================= */
+.portfolio-slider {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 550px;
+}
+
+/* cards */
+.portfolio-card {
+  position: absolute;
+  width: 320px;
+  height: 460px;
+  cursor: pointer;
+  transition: all 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+  filter: grayscale(20%);
+  opacity: 0.6;
+}
+
+.portfolio-card.active {
+  opacity: 1;
+  filter: grayscale(0);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+}
+
+/* image */
+.portfolio-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ================= OVERLAY ================= */
+.overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 35px 25px;
+  background: linear-gradient(
+    transparent,
+    rgba(0,0,0,0.75)
+  );
+  color: white;
+  text-align: left;
+  opacity: 0;
+  transition: 0.5s ease;
+}
+
+.portfolio-card.active .overlay {
+  opacity: 1;
+}
+
+.overlay p {
+  font-family: "Montserrat", sans-serif;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 8px;
+  color: #d8c7a3;
+}
+
+.overlay h3 {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1.6rem;
+  font-weight: 400;
+  margin-bottom: 12px;
+}
+
+.view-link {
+  font-family: "Montserrat", sans-serif;
+  font-size: 0.65rem;
+  letter-spacing: 2px;
+  border-bottom: 1px solid rgba(255,255,255,0.4);
+  padding-bottom: 4px;
+}
+
+/* ================= PAGINATION ================= */
+.pagination {
+  margin-top: 50px;
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #d1d1d1;
+  cursor: pointer;
+  transition: 0.4s;
+}
+
+.dot.active {
+  background: #b08d57;
+  transform: scale(1.5);
+}
+
+/* ================= TABLET ================= */
+@media (max-width: 768px) {
+  .portfolio {
+    padding: 50px 12px;
+  }
+
+  .p-tag {
+    font-size: 0.55rem;
+    letter-spacing: 2px;
+  }
+
+  .portfolio h2 {
+    font-size: 2rem;
+    margin-bottom: 30px;
+  }
+
+  .portfolio-slider {
+    height: 380px;
+    overflow: hidden;
+  }
+
+  .portfolio-card {
+    width: 220px;
+    height: 300px;
+    transition: all 0.6s ease;
+  }
+
+  .portfolio-card.active {
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+  }
+
+  /* overlay always visible on mobile */
+  .overlay {
+    opacity: 1;
+    padding: 18px 15px;
+    background: linear-gradient(
+      transparent,
+      rgba(0,0,0,0.75)
+    );
+  }
+
+  .overlay h3 {
+    font-size: 1rem;
+  }
+
+  .overlay p {
+    font-size: 0.55rem;
+  }
+
+  .view-link {
+    font-size: 0.55rem;
+  }
+
+  .pagination {
+    margin-top: 25px;
+    gap: 10px;
+  }
+}
+
+/* ================= SMALL MOBILE ================= */
+@media (max-width: 480px) {
+  .portfolio-slider {
+    height: 340px;
+  }
+
+  .portfolio-card {
+    width: 180px;
+    height: 260px;
+  }
+
+  .portfolio h2 {
+    font-size: 1.7rem;
+  }
+
+  .overlay h3 {
+    font-size: 0.9rem;
+  }
+}

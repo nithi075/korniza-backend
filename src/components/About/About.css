@@ -1,0 +1,168 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Montserrat:wght@300;400&display=swap');
+
+/* section */
+.about {
+  background: #f4f1ea;
+  padding: 50px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 40px;
+}
+
+/* text area */
+.about h2 {
+  font-family: "Cormorant Garamond", serif;
+  font-weight: 400;
+  letter-spacing: 2px;
+  font-size: 1.6rem;
+  margin-bottom: 10px;
+}
+
+/* paragraph */
+.about p {
+  font-family: Montserrat;
+  font-size: 0.75rem;
+  color: #666;
+  max-width: 320px;
+  margin: auto;
+  line-height: 1.8;
+}
+
+/* button */
+.about button {
+  margin-top: 18px;
+  background: #c5a059;
+  color: white;
+  border: none;
+  padding: 10px 22px;
+  font-size: 0.6rem;
+  letter-spacing: 2px;
+  cursor: pointer;
+}
+
+/* ---------------- IMAGE SECTION ---------------- */
+
+.about-images {
+  position: relative;
+  width: 100%;
+  max-width: 380px;
+  height: 500px;
+}
+
+/* main top image */
+.main-img {
+  width: 100%;
+  height: 360px;
+  object-fit: cover;
+  display: block;
+}
+
+/* small overlapping image */
+.small-img {
+  position: absolute;
+  bottom: 40px;   /* overlap on main image */
+  right: 0;
+  width: 220px;
+  height: 140px;
+  object-fit: cover;
+  border: 5px solid #f4f1ea;
+}
+
+/* experience badge */
+.experience-box {
+  position: absolute;
+  top: 20px;
+  right: 0;
+  width: 110px;
+  height: 110px;
+  background: #c5a059;
+  color: black;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* badge number */
+.experience-box h3 {
+  font-size: 2rem;
+  margin: 0;
+  font-weight: bold;
+}
+
+/* badge text */
+.experience-box p {
+  font-size: 0.65rem;
+  text-align: center;
+  margin: 0;
+  line-height: 1.4;
+  color: black;
+}
+
+/* ---------------- TABLET ---------------- */
+
+@media (min-width: 768px) {
+  .about {
+    flex-direction: row;
+    text-align: left;
+    justify-content: center;
+    align-items: center;
+    gap: 60px;
+  }
+
+  .about div {
+    max-width: 400px;
+  }
+
+  .about p {
+    margin: 0;
+  }
+
+  .about-images {
+    max-width: 450px;
+    height: 550px;
+  }
+
+  .main-img {
+    height: 400px;
+  }
+
+  .small-img {
+    width: 250px;
+    height: 160px;
+    bottom: 50px;
+  }
+}
+
+/* ---------------- DESKTOP ---------------- */
+
+@media (min-width: 1024px) {
+  .about {
+    padding: 80px 20px;
+  }
+
+  .about h2 {
+    font-size: 2rem;
+  }
+
+  .about p {
+    font-size: 0.9rem;
+  }
+
+  .about-images {
+    max-width: 500px;
+    height: 600px;
+  }
+
+  .main-img {
+    height: 450px;
+  }
+
+  .small-img {
+    width: 280px;
+    height: 180px;
+    bottom: 60px;
+  }
+}

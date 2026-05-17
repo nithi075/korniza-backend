@@ -14,7 +14,7 @@ const addGallery = async (req, res) => {
     const data = new Gallery({
       title: req.body.title,
       category: req.body.category,
-      imageUrl: `http://localhost:5000/uploads/${req.file.filename}`
+      imageUrl: `http://localhost:5000/uploads/images/${req.file.filename}`
     });
 
     await data.save();

@@ -1,0 +1,100 @@
+.floating-container {
+  position: fixed;
+  bottom: 40px;
+  right: 40px;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.floating-chat-glass {
+  display: flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.7); /* Translucent White */
+  backdrop-filter: blur(12px); /* Glass Blur */
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(179, 148, 90, 0.3); /* Soft Gold Border */
+  padding: 12px;
+  border-radius: 60px;
+  text-decoration: none;
+  color: #1a1a1a;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+  max-width: 55px; /* Initial Width (Only showing icon) */
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
+}
+
+/* On Hover: Expand the Button */
+.floating-chat-glass:hover {
+  max-width: 220px; /* Expand to show text */
+  padding: 12px 25px;
+  background: #fff;
+  border-color: #b3945a;
+  box-shadow: 0 20px 40px rgba(179, 148, 90, 0.15);
+}
+
+.icon-wrapper {
+  min-width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #b3945a; /* Gold Icon */
+  transition: transform 0.5s ease;
+}
+
+.whatsapp-svg {
+  width: 24px;
+  height: 24px;
+}
+
+.chat-label {
+  font-size: 0.85rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-left: 15px;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateX(10px);
+  transition: all 0.4s ease;
+}
+
+/* Hover States for Internal Elements */
+.floating-chat-glass:hover .chat-label {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.floating-chat-glass:hover .icon-wrapper {
+  transform: rotate(360deg); /* Subtle spin on hover */
+}
+
+/* Ambient Glow behind the button */
+.floating-glow {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  background: #b3945a;
+  filter: blur(40px);
+  opacity: 0.15;
+  z-index: -1;
+  border-radius: 50%;
+}
+
+/* Mobile: Stay slightly smaller but accessible */
+@media (max-width: 768px) {
+  .floating-container {
+    bottom: 25px;
+    right: 25px;
+  }
+  
+  /* On mobile, maybe keep it expanded or just an icon */
+  .floating-chat-glass {
+    max-width: 55px;
+  }
+  .floating-chat-glass:active {
+    max-width: 180px;
+  }
+}
