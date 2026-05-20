@@ -9,9 +9,13 @@ const featuredSchema =
     images: [
 
       {
-        title: String,
+        title: {
+          type: String
+        },
 
-        image: String
+        image: {
+          type: String
+        }
       }
 
     ]
