@@ -1,103 +1,166 @@
-const Featured = require("../models/Featured");
+const Featured =
+  require("../models/Featured");
 
-const addFeatured = async (
-  req,
-  res
-) => {
-  try {
-    // New uploaded images
-    const imageUrls =
-      req.files.map(
-        (file) => file.path
-      );
+/* ================= ADD FEATURED ================= */
 
-    let existingFeatured =
-      await Featured.findOne();
+const addFeatured =
+  async (req, res) => {
 
-    // UPDATE
-    if (existingFeatured) {
-      existingFeatured.title =
-        req.body.title;
+    try {
 
-      existingFeatured.videoUrl =
-        req.body.videoUrl;
+      /* CREATE NEW ITEMS */
 
-      // Old + New images
-      let updatedImages = [
-        ...existingFeatured.images,
-        ...imageUrls
-      ];
+      const newItems =
+        req.files.map(
+          (
+            file,
+            index
+          ) => ({
 
-      // Keep latest 8 only
+            title:
+              req.body.titles[index],
+
+            image:
+              `https://korniza-backend.onrender.com/uploads/images/${file.filename}`
+
+          })
+        );
+
+      /* CHECK EXISTING */
+
+      let existingFeatured =
+        await Featured.findOne();
+
       if (
-        updatedImages.length > 8
+        existingFeatured
       ) {
-        updatedImages =
-          updatedImages.slice(
-            updatedImages.length - 8
-          );
+
+        /* MERGE OLD + NEW */
+
+        let updatedFeatured =
+          [
+            ...existingFeatured.featured,
+            ...newItems
+          ];
+
+        /* KEEP ONLY LATEST 5 */
+
+        if (
+          updatedFeatured.length >
+          5
+        ) {
+
+          updatedFeatured =
+            updatedFeatured.slice(
+              -5
+            );
+        }
+
+        /* UPDATE */
+
+        existingFeatured.featured =
+          updatedFeatured;
+
+        await existingFeatured.save();
+
+        return res.json({
+
+          success: true,
+
+          message:
+            "Featured updated successfully",
+
+          data:
+            existingFeatured
+
+        });
       }
 
-      existingFeatured.images =
-        updatedImages;
+      /* CREATE NEW DOCUMENT */
 
-      await existingFeatured.save();
+      const data =
+        new Featured({
 
-      return res.json({
+          featured:
+            newItems
+
+        });
+
+      await data.save();
+
+      res.json({
+
+        success: true,
+
         message:
-          "Featured updated successfully",
-        data: existingFeatured
+          "Featured added successfully",
+
+        data
+
+      });
+
+    } catch (error) {
+
+      res.status(500).json({
+
+        success: false,
+
+        error:
+          error.message
+
       });
     }
+  };
 
-    // CREATE
-    const data = new Featured({
-      title: req.body.title,
-      videoUrl: req.body.videoUrl,
-      images: imageUrls
-    });
+/* ================= GET FEATURED ================= */
 
-    await data.save();
+const getFeatured =
+  async (req, res) => {
 
-    res.json({
-      message:
-        "Featured added successfully",
-      data
-    });
+    try {
 
-  } catch (error) {
-    res.status(500).json({
-      error: error.message
-    });
-  }
-};
+      const data =
+        await Featured.findOne();
 
-const getFeatured = async (
-  req,
-  res
-) => {
-  try {
-    const data =
-      await Featured.findOne();
+      if (!data) {
 
-    if (!data) {
-      return res.json({
-        message:
-          "No featured data found",
-        images: []
+        return res.json({
+
+          success: true,
+
+          message:
+            "No featured data found",
+
+          featured: []
+
+        });
+      }
+
+      res.json({
+
+        success: true,
+
+        featured:
+          data.featured
+
+      });
+
+    } catch (error) {
+
+      res.status(500).json({
+
+        success: false,
+
+        error:
+          error.message
+
       });
     }
-
-    res.json(data);
-
-  } catch (error) {
-    res.status(500).json({
-      error: error.message
-    });
-  }
-};
+  };
 
 module.exports = {
+
   addFeatured,
   getFeatured
+
 };
