@@ -4,49 +4,43 @@ const Featured =
 const addFeatured =
   async (req, res) => {
     try {
-      /* NEW IMAGE URLS */
 
-      const newImageUrls =
+      const titles =
+        req.body.titles;
+
+      const newItems =
         req.files.map(
-          (file) =>
-            `https://korniza-backend.onrender.com/uploads/images/${file.filename}`
-        );
+          (file, index) => ({
+            title:
+              Array.isArray(titles)
+                ? titles[index]
+                : titles,
 
-      /* CHECK EXISTING DATA */
+            image:
+              `https://korniza-backend.onrender.com/uploads/images/${file.filename}`
+          })
+        );
 
       let existingFeatured =
         await Featured.findOne();
 
-      if (
-        existingFeatured
-      ) {
-        /* KEEP OLD IMAGES */
+      if (existingFeatured) {
 
-        let updatedImages =
-          [
-            ...existingFeatured.images,
-            ...newImageUrls
-          ];
+        let updatedItems = [
+          ...existingFeatured.items,
+          ...newItems
+        ];
 
-        /* KEEP ONLY LATEST 5 */
-
+        // Keep latest 5
         if (
-          updatedImages.length >
-          5
+          updatedItems.length > 5
         ) {
-          updatedImages =
-            updatedImages.slice(
-              -5
-            );
+          updatedItems =
+            updatedItems.slice(-5);
         }
 
-        /* UPDATE */
-
-        existingFeatured.title =
-          req.body.title;
-
-        existingFeatured.images =
-          updatedImages;
+        existingFeatured.items =
+          updatedItems;
 
         await existingFeatured.save();
 
@@ -58,15 +52,10 @@ const addFeatured =
         });
       }
 
-      /* CREATE NEW */
-
+      // Create New
       const data =
         new Featured({
-          title:
-            req.body.title,
-
-          images:
-            newImageUrls
+          items: newItems
         });
 
       await data.save();
@@ -77,35 +66,42 @@ const addFeatured =
 
         data
       });
+
     } catch (error) {
+
       res.status(500).json({
-        error:
-          error.message
+        error: error.message
       });
+
     }
   };
 
 const getFeatured =
   async (req, res) => {
+
     try {
+
       const data =
         await Featured.findOne();
 
       if (!data) {
+
         return res.json({
           message:
             "No featured data found",
 
-          images: []
+          items: []
         });
       }
 
       res.json(data);
+
     } catch (error) {
+
       res.status(500).json({
-        error:
-          error.message
+        error: error.message
       });
+
     }
   };
 
