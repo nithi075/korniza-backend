@@ -1,32 +1,18 @@
 const Featured =
   require("../models/Featured");
 
-/* ================= ADD FEATURED ================= */
-
 const addFeatured =
   async (req, res) => {
-
     try {
+      /* NEW IMAGE URLS */
 
-      /* CREATE IMAGE + TITLE ARRAY */
-
-      const newFeatured =
+      const newImageUrls =
         req.files.map(
-          (
-            file,
-            index
-          ) => ({
-
-            title:
-              req.body.titles[index],
-
-            image:
-              `${req.protocol}://${req.get("host")}/uploads/images/${file.filename}`
-
-          })
+          (file) =>
+            `https://korniza-backend.onrender.com/uploads/images/${file.filename}`
         );
 
-      /* CHECK EXISTING */
+      /* CHECK EXISTING DATA */
 
       let existingFeatured =
         await Featured.findOne();
@@ -34,13 +20,12 @@ const addFeatured =
       if (
         existingFeatured
       ) {
-
-        /* MERGE OLD + NEW */
+        /* KEEP OLD IMAGES */
 
         let updatedImages =
           [
             ...existingFeatured.images,
-            ...newFeatured
+            ...newImageUrls
           ];
 
         /* KEEP ONLY LATEST 5 */
@@ -49,7 +34,6 @@ const addFeatured =
           updatedImages.length >
           5
         ) {
-
           updatedImages =
             updatedImages.slice(
               -5
@@ -58,21 +42,19 @@ const addFeatured =
 
         /* UPDATE */
 
+        existingFeatured.title =
+          req.body.title;
+
         existingFeatured.images =
           updatedImages;
 
         await existingFeatured.save();
 
         return res.json({
-
-          success: true,
-
           message:
             "Featured updated successfully",
 
-          data:
-            existingFeatured
-
+          data: existingFeatured
         });
       }
 
@@ -80,84 +62,54 @@ const addFeatured =
 
       const data =
         new Featured({
+          title:
+            req.body.title,
 
           images:
-            newFeatured
-
+            newImageUrls
         });
 
       await data.save();
 
       res.json({
-
-        success: true,
-
         message:
           "Featured added successfully",
 
         data
-
       });
-
     } catch (error) {
-
       res.status(500).json({
-
-        success: false,
-
         error:
           error.message
-
       });
     }
   };
 
-/* ================= GET FEATURED ================= */
-
 const getFeatured =
   async (req, res) => {
-
     try {
-
       const data =
         await Featured.findOne();
 
       if (!data) {
-
         return res.json({
-
-          success: true,
+          message:
+            "No featured data found",
 
           images: []
-
         });
       }
 
-      res.json({
-
-        success: true,
-
-        images:
-          data.images
-
-      });
-
+      res.json(data);
     } catch (error) {
-
       res.status(500).json({
-
-        success: false,
-
         error:
           error.message
-
       });
     }
   };
 
 module.exports = {
-
   addFeatured,
   getFeatured
-
 };
