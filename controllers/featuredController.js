@@ -8,14 +8,11 @@ const addFeatured =
 
     try {
 
-      /* CREATE NEW ITEMS */
+      /* CREATE IMAGE + TITLE */
 
-      const newItems =
+      const newFeatured =
         req.files.map(
-          (
-            file,
-            index
-          ) => ({
+          (file, index) => ({
 
             title:
               req.body.titles[index],
@@ -39,8 +36,8 @@ const addFeatured =
 
         let updatedFeatured =
           [
-            ...existingFeatured.featured,
-            ...newItems
+            ...existingFeatured.images,
+            ...newFeatured
           ];
 
         /* KEEP ONLY LATEST 5 */
@@ -58,14 +55,12 @@ const addFeatured =
 
         /* UPDATE */
 
-        existingFeatured.featured =
+        existingFeatured.images =
           updatedFeatured;
 
         await existingFeatured.save();
 
         return res.json({
-
-          success: true,
 
           message:
             "Featured updated successfully",
@@ -76,21 +71,19 @@ const addFeatured =
         });
       }
 
-      /* CREATE NEW DOCUMENT */
+      /* CREATE NEW */
 
       const data =
         new Featured({
 
-          featured:
-            newItems
+          images:
+            newFeatured
 
         });
 
       await data.save();
 
       res.json({
-
-        success: true,
 
         message:
           "Featured added successfully",
@@ -102,8 +95,6 @@ const addFeatured =
     } catch (error) {
 
       res.status(500).json({
-
-        success: false,
 
         error:
           error.message
@@ -126,30 +117,19 @@ const getFeatured =
 
         return res.json({
 
-          success: true,
-
           message:
             "No featured data found",
 
-          featured: []
+          images: []
 
         });
       }
 
-      res.json({
-
-        success: true,
-
-        featured:
-          data.featured
-
-      });
+      res.json(data);
 
     } catch (error) {
 
       res.status(500).json({
-
-        success: false,
 
         error:
           error.message
