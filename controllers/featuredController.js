@@ -17,7 +17,7 @@ const addFeatured =
                 : titles,
 
             image:
-              `https://korniza-backend.onrender.com/uploads/images/${file.filename}`
+              `https://korniza-backend.onrender.com/${file.filename}`
           })
         );
 
