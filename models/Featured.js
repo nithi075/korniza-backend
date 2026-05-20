@@ -4,18 +4,14 @@ const mongoose =
 const featuredSchema =
   new mongoose.Schema({
 
-    featured: [
+    videoUrl: String,
+
+    images: [
 
       {
-        title: {
-          type: String,
-          required: true
-        },
+        title: String,
 
-        image: {
-          type: String,
-          required: true
-        }
+        image: String
       }
 
     ]
