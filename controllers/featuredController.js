@@ -8,17 +8,20 @@ const addFeatured =
 
     try {
 
-      /* CREATE IMAGE + TITLE */
+      /* CREATE IMAGE + TITLE ARRAY */
 
       const newFeatured =
         req.files.map(
-          (file, index) => ({
+          (
+            file,
+            index
+          ) => ({
 
             title:
               req.body.titles[index],
 
             image:
-              `https://korniza-backend.onrender.com/uploads/images/${file.filename}`
+              `${req.protocol}://${req.get("host")}/uploads/images/${file.filename}`
 
           })
         );
@@ -34,7 +37,7 @@ const addFeatured =
 
         /* MERGE OLD + NEW */
 
-        let updatedFeatured =
+        let updatedImages =
           [
             ...existingFeatured.images,
             ...newFeatured
@@ -43,12 +46,12 @@ const addFeatured =
         /* KEEP ONLY LATEST 5 */
 
         if (
-          updatedFeatured.length >
+          updatedImages.length >
           5
         ) {
 
-          updatedFeatured =
-            updatedFeatured.slice(
+          updatedImages =
+            updatedImages.slice(
               -5
             );
         }
@@ -56,11 +59,13 @@ const addFeatured =
         /* UPDATE */
 
         existingFeatured.images =
-          updatedFeatured;
+          updatedImages;
 
         await existingFeatured.save();
 
         return res.json({
+
+          success: true,
 
           message:
             "Featured updated successfully",
@@ -85,6 +90,8 @@ const addFeatured =
 
       res.json({
 
+        success: true,
+
         message:
           "Featured added successfully",
 
@@ -95,6 +102,8 @@ const addFeatured =
     } catch (error) {
 
       res.status(500).json({
+
+        success: false,
 
         error:
           error.message
@@ -117,19 +126,27 @@ const getFeatured =
 
         return res.json({
 
-          message:
-            "No featured data found",
+          success: true,
 
           images: []
 
         });
       }
 
-      res.json(data);
+      res.json({
+
+        success: true,
+
+        images:
+          data.images
+
+      });
 
     } catch (error) {
 
       res.status(500).json({
+
+        success: false,
 
         error:
           error.message
