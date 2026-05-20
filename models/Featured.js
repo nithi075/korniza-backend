@@ -1,9 +1,29 @@
-const mongoose = require("mongoose");
+const mongoose =
+  require("mongoose");
 
-const featuredSchema = new mongoose.Schema({
-  title: String,
-  videoUrl: String,
-  images: [String]
-});
+const featuredSchema =
+  new mongoose.Schema({
 
-module.exports = mongoose.model("Featured", featuredSchema);
+    featured: [
+
+      {
+        title: {
+          type: String,
+          required: true
+        },
+
+        image: {
+          type: String,
+          required: true
+        }
+      }
+
+    ]
+
+  });
+
+module.exports =
+  mongoose.model(
+    "Featured",
+    featuredSchema
+  );
