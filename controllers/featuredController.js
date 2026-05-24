@@ -1,44 +1,75 @@
 const Featured =
   require("../models/Featured");
 
+/* =========================================
+   ADD FEATURED
+========================================= */
+
 const addFeatured =
   async (req, res) => {
 
     try {
 
-      const titles =
-        req.body.titles;
+      /* =========================================
+         GET FORM DATA
+      ========================================= */
 
-      /* ================= NEW ITEMS ================= */
+      const titles =
+        Array.isArray(
+          req.body.itemTitles
+        )
+          ? req.body.itemTitles
+          : [req.body.itemTitles];
+
+      const categories =
+        Array.isArray(
+          req.body.categories
+        )
+          ? req.body.categories
+          : [req.body.categories];
+
+      /* =========================================
+         CREATE NEW ITEMS
+      ========================================= */
 
       const newItems =
         req.files.map(
-          (file, index) => ({
+          (
+            file,
+            index
+          ) => ({
 
             title:
-              Array.isArray(titles)
-                ? titles[index]
-                : titles,
+              titles[index] || "",
 
-            // CLOUDINARY URL
             image:
-              file.path
+              file.path,
+
+            category:
+              categories[index] || ""
 
           })
         );
 
-      /* ================= CHECK EXISTING ================= */
+      /* =========================================
+         CHECK EXISTING
+      ========================================= */
 
       let existingFeatured =
         await Featured.findOne();
 
+      /* =========================================
+         UPDATE EXISTING
+      ========================================= */
+
       if (existingFeatured) {
 
-        /* KEEP OLD + NEW */
-
         let updatedItems = [
+
           ...existingFeatured.items,
+
           ...newItems
+
         ];
 
         /* KEEP ONLY LATEST 5 */
@@ -49,9 +80,8 @@ const addFeatured =
 
           updatedItems =
             updatedItems.slice(-5);
-        }
 
-        /* UPDATE */
+        }
 
         existingFeatured.items =
           updatedItems;
@@ -67,9 +97,12 @@ const addFeatured =
             existingFeatured
 
         });
+
       }
 
-      /* ================= CREATE NEW ================= */
+      /* =========================================
+         CREATE NEW
+      ========================================= */
 
       const data =
         new Featured({
@@ -98,8 +131,14 @@ const addFeatured =
           error.message
 
       });
+
     }
+
   };
+
+/* =========================================
+   GET FEATURED
+========================================= */
 
 const getFeatured =
   async (req, res) => {
@@ -119,6 +158,7 @@ const getFeatured =
           items: []
 
         });
+
       }
 
       res.json(data);
@@ -131,12 +171,15 @@ const getFeatured =
           error.message
 
       });
+
     }
+
   };
 
 module.exports = {
 
   addFeatured,
+
   getFeatured
 
 };
