@@ -1,15 +1,30 @@
-const mongoose = require("mongoose");
+const mongoose =
+  require("mongoose");
 
-const featuredSchema = new mongoose.Schema({
-  items: [
-    {
-      title: String,
-      image: String
-    }
-  ]
-});
+const featuredSchema =
+  new mongoose.Schema({
 
-module.exports = mongoose.model(
-  "Featured",
-  featuredSchema
-);
+    items: [
+
+      {
+
+        title:
+          String,
+
+        image:
+          String,
+
+        category:
+          String
+
+      }
+
+    ]
+
+  });
+
+module.exports =
+  mongoose.model(
+    "Featured",
+    featuredSchema
+  );
